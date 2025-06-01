@@ -59,6 +59,10 @@ LDAP- Lightweight Directory Access Protocal : runs over the TCP IP protocal - op
 	  n/w security and access controll
 
 
+why LDAP:
+	Create policy to everyone.
+	Block one user
+
 
 	  LDAP
 App <-------> LDAP Server <---> LDAP DB
@@ -78,9 +82,11 @@ App <-------> LDAP Server <---> LDAP DB
 												backend			Account
 												  |
 												name=john,adde=ind,phone=1933033
-												
+
+	
 
 Terms:
+	dc		- Domain component
 	o		- organization name
 	ou		- organization unit
 	cn		- common name
@@ -89,8 +95,8 @@ Terms:
 	User	- inetOrgPersion
 	User	- groupOfUniqueName
 Authentication Types:	
-	1) Simple
-	2) SASL 
+	1) Simple -- user name and pwd to bind
+	2) SASL   -- 
 
 Apache Directory Studio:
 -----------------------
@@ -180,14 +186,28 @@ Change password of user.
 Update user details like update pwd.
 
 
+==============================================
+Spring Boot + LDAP
+==============================================
 	
 sb application
 	web
 	securty
 	ldap
 	
-spring ldap official doc:
+spring ldap official doc:n https://spring.io/guides/gs/authenticating-ldap to get sample code.
 	copy  and create rest api Controller to access localhost:8080 by comment and uncomment spring security in pom.xml
+	Create Config file and copy from official doc.
+	
+	1) Keep all ldap configs in Config file : @Profile("ldap-config-java")
+		LdapTemplate:
+		LdapContext Source:
+		Authentication Manager:
+	java -jar sb-security-02-0.0.1-SNAPSHOT.jar --spring.profiles.active=ldap-config-java
+	
+		
+	2) Keep all ldap configs in properties file:@Profile("ldap-config-file")
+	
 
 
 
