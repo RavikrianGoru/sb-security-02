@@ -213,9 +213,30 @@ spring ldap official doc:n https://spring.io/guides/gs/authenticating-ldap to ge
 	
 	java -jar sb-security-02-0.0.1-SNAPSHOT.jar --spring.profiles.active=ldap-config-file
 
+-------------------------
+Find which user is login into ldap using spring boot application?
+	http://localhost:8080/
+	http://localhost:8080/user
+Add user into Apached Directory Studio/Ldap using spring boot application?
+	Dependency: thymleaf, lombok
+	http://localhost:8080/
+	http://localhost:8080/addUserForm	
 
+Load/Retrieve all users in table format through Spring boo? Run -->java -jar sb-security-02-0.0.1-SNAPSHOT.jar --spring.profiles.active=ldap-config-java 
 	
-
-
+	http://localhost:8080/
+	http://localhost:8080/addUserForm	
+	http://localhost:8080/allusers
+	http://localhost:8080/userList
 	
+Get user by uid?
+	http://localhost:8080/
+	http://localhost:8080/user
+	http://localhost:8080/users/101
+	
+Delete user by uid?	
+	http://localhost:8080/
+	http://localhost:8080/user
+	http://localhost:8080/users/101
+	http://localhost:8080/deleteusers/101
 	
