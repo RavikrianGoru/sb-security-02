@@ -38,15 +38,15 @@ public class LdapWebSecurityConfig {
 	public ContextSource contextSource() {
 		LdapContextSource ldapContextSource = new LdapContextSource();
 		ldapContextSource.setUrl("ldap://localhost:10389");
-		// ldapContextSource.setUserDn("uid=admin,ou=system");
-		// ldapContextSource.setPassword("secret");
+		ldapContextSource.setUserDn("uid=admin,ou=system");
+		ldapContextSource.setPassword("secret");
 		return ldapContextSource;
 	}
 
 	@Bean
 	AuthenticationManager authManager(BaseLdapPathContextSource source) {
 		LdapBindAuthenticationManagerFactory factory = new LdapBindAuthenticationManagerFactory(source);
-		factory.setUserDnPatterns("cn={0},ou=users,ou=system");// takes user from login page
+		factory.setUserDnPatterns("uid={0},ou=users,ou=system");// takes user from login page
 		return factory.createAuthenticationManager();
 	}
 

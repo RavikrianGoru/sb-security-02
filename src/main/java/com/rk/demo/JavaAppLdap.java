@@ -28,8 +28,8 @@ public class JavaAppLdap {
 		env.put(Context.SECURITY_PRINCIPAL, "uid=admin,ou=system");
 		env.put(Context.SECURITY_CREDENTIALS, "secret");
 
-		// env.put(Context.SECURITY_PRINCIPAL, "cn=goru,ou=users,ou=system");
-		// env.put(Context.SECURITY_CREDENTIALS, "1");
+		// env.put(Context.SECURITY_PRINCIPAL, "uid=100,ou=users,ou=system");
+		// env.put(Context.SECURITY_CREDENTIALS, "100");
 
 		try {
 			connection = new InitialDirContext(env);
@@ -97,10 +97,10 @@ public class JavaAppLdap {
 	}
 
 	private void searchUser(String userName) throws NamingException {
-		String searchFilter = "(cn=" + userName + ")";
-		// String searchFilter = "(&(cn=ravi)(sn=g))";
-		// String searchFilter = "(|(cn=ravi)(sn=g))";
-		String[] reqAttribute = { "cn", "sn" };
+		String searchFilter = "(uid=" + userName + ")";
+		// String searchFilter = "(&(uid=100)(sn=g))";
+		// String searchFilter = "(|(uid=100)(sn=g))";
+		String[] reqAttribute = { "uid", "cn", "sn" };
 		SearchControls controls = new SearchControls();
 		controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 		controls.setReturningAttributes(reqAttribute);
@@ -112,7 +112,8 @@ public class JavaAppLdap {
 		while (users.hasMore()) {
 			searchResults = users.next();
 			Attributes attrs = searchResults.getAttributes();
-			System.out.println(attrs.get("cn").get(0) + "----" + attrs.get("sn").get(0));
+			System.out.println(
+					attrs.get("uid").get(0) + "----" + attrs.get("cn").get(0) + "----" + attrs.get("sn").get(0));
 		}
 	}
 
@@ -121,11 +122,11 @@ public class JavaAppLdap {
 		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 		env.put(Context.PROVIDER_URL, "ldap://localhost:10389");
 
-		env.put(Context.SECURITY_PRINCIPAL, "cn=" + userName + ",ou=users,ou=system");
+		env.put(Context.SECURITY_PRINCIPAL, "uid=" + userName + ",ou=users,ou=system");
 		env.put(Context.SECURITY_CREDENTIALS, password);
 
-		// env.put(Context.SECURITY_PRINCIPAL, "cn=goru,ou=users,ou=system");
-		// env.put(Context.SECURITY_CREDENTIALS, "1");
+		// env.put(Context.SECURITY_PRINCIPAL, "uid=100,ou=users,ou=system");
+		// env.put(Context.SECURITY_CREDENTIALS, "100");
 
 		try {
 			DirContext con = new InitialDirContext(env);
@@ -143,7 +144,7 @@ public class JavaAppLdap {
 		try {
 			ModificationItem[] mods = new ModificationItem[1];
 			mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, new BasicAttribute("userPassword", password));
-			connection.modifyAttributes("cn=" + userName + ",ou=users,ou=system", mods);
+			connection.modifyAttributes("uid=" + userName + ",ou=users,ou=system", mods);
 			System.out.println("user " + userName + " pwd is updated successfully!!");
 		} catch (Exception e) {
 			System.out.println("user " + userName + " pwd is update failed!!");
@@ -155,7 +156,7 @@ public class JavaAppLdap {
 			ModificationItem[] mods = new ModificationItem[1];
 			Attribute attr = new BasicAttribute("mobile", mobileNbr);
 			mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, attr);
-			connection.modifyAttributes("cn=" + userName + ",ou=users,ou=system", mods);
+			connection.modifyAttributes("uid=" + userName + ",ou=users,ou=system", mods);
 			System.out.println("user " + userName + " mobile is updated successfully!!");
 		} catch (Exception e) {
 			System.out.println("user " + userName + " mobile is update failed!!");
@@ -168,21 +169,21 @@ public class JavaAppLdap {
 		app.newLdapConnection();
 
 		System.out.println("Check authentication of user-valid case");
-		app.authenticateUser("ravi", "1");
+		app.authenticateUser("100", "100");
 		Thread.sleep(2000);
 
 		System.out.println("Update user pwd");
-		app.updateUserPwd("ravi", "2");
+		app.updateUserPwd("100", "200");
 		Thread.sleep(10000);
 
 		System.out.println("Check authentication of user with old pwd -invalid case");
-		app.authenticateUser("ravi", "1");
+		app.authenticateUser("100", "100");
 		Thread.sleep(2000);
 
 		System.out.println("Update user pwd with old ");
-		app.updateUserPwd("ravi", "1");
+		app.updateUserPwd("100", "100");
 		System.out.println("Check authentication of user-valid case");
-		app.authenticateUser("ravi", "1");
+		app.authenticateUser("100", "100");
 		Thread.sleep(2000);
 
 		String username = "R-" + (int) (Math.random() * 100);
@@ -194,7 +195,7 @@ public class JavaAppLdap {
 		System.out.println("Search user adding user --------------");
 		app.searchUser(username);
 		System.out.println("Update user mobile");
-		app.updateUserDetails("ravi", "1234567890");
+		app.updateUserDetails("100", "1234567890");
 
 		System.out.println("Waiting for 10 secs: check in Apache Directory studio");
 		Thread.sleep(10000);
@@ -205,7 +206,7 @@ public class JavaAppLdap {
 		app.deleteUserToGroup(username, "Administrators");
 		app.getAllUsers();
 		System.out.println("Update user mobile");
-		app.updateUserDetails("ravi", "123");
+		app.updateUserDetails("100", "123");
 
 	}
 

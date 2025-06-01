@@ -27,7 +27,7 @@ public class LdapWebSecurityConfigPros {
 	@Bean
 	AuthenticationManager authManager(BaseLdapPathContextSource source) {
 		LdapBindAuthenticationManagerFactory factory = new LdapBindAuthenticationManagerFactory(source);
-		factory.setUserDnPatterns("cn={0}");// takes user from login page
+		factory.setUserDnPatterns("uid={0}");// takes user from login page
 		return factory.createAuthenticationManager();
 	}
 
