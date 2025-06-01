@@ -204,11 +204,14 @@ spring ldap official doc:n https://spring.io/guides/gs/authenticating-ldap to ge
 		LdapContext Source:
 		Authentication Manager:
 	java -jar sb-security-02-0.0.1-SNAPSHOT.jar --spring.profiles.active=ldap-config-java
-	
+		1) Stop LDAP server in Apached Directory Studio and run application
+			org.springframework.security.authentication.InternalAuthenticationServiceException: localhost:10389
+		
+		
 		
 	2) Keep all ldap configs in properties file:@Profile("ldap-config-file")
 	
-
+	java -jar sb-security-02-0.0.1-SNAPSHOT.jar --spring.profiles.active=ldap-config-file
 
 
 	
